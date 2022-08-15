@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Group 13">
+
+    <!-- Bootstrap core CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" id="theme_link" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/materia/bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <title><?php echo $view->pageTitle; ?></title>
+</head>
+<body role="document">
+ <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+     <div class="container-fluid">
+         <a class="navbar-brand" href="index.php"><img src="images/logo.png" style="max-width: 70px; max-height: 70px;"></a>
+
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+        <span class="navbar-toggler-icon"> </span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarResponsive">
+             <ul class="navbar-nav ml-auto " >
+                 <?php
+
+                 if(isset($_SESSION['userID'])){
+                     echo '<li class="nav-item" id="loginNav" ><a class="nav-link" href="login.php?logout=true"><img src="images/logout.png">Logout</a></li>
+                          <li class="nav-item" id="loginNav" ><a class="nav-link" href="userportal.php"><img src="images/tasks.png">Portal</a></li>';
+                 }
+                 else{
+//                     echo '<li class="nav-item"><a class="nav-link" href="register.php">Register Organisation</a></li>';
+//                     echo '<li class="nav-item"><a class="nav-link"  href="login.php"><img src="images/login.png"> Log in</a></li>';
+//                     echo '<li class="nav-item"><a class="nav-link" href="signup.php"><img src="images/signup.png">Sign up</a></li>';
+                     echo '<a class="btn btn-info text-light m-2" href="register.php">Register Organisation</a> ';
+                     echo '<a class="btn btn-lg btn-primary text-light m-2 " href="login.php"> Log in</a>';
+                     echo '<a class="btn btn-lg btn-primary text-light m-2 " href="signup.php">Sign up</a>';
+                 }
+                 ?>
+             </ul>
+         </div>
+     </div>
+ </nav>
+
+<div class="container-fluid" id="body-container">
+

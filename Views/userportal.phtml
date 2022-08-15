@@ -1,0 +1,282 @@
+<?php require_once ("Views/template/header.phtml") ?>
+<!--Sidebar-->
+<?php //require_once ("Views/template/sidebar.phtml") ?>
+<!--Whole page wrapper-->
+<div class="d-flex" id="wrapper">
+<?php require_once ("Views/template/sidebar.phtml");?>
+        <!--    Page Body-->
+    <div id="page-content-wrapper">
+        <button class="btn btn-lg btn-outline-dark border border-dark mt-2 ml-sm-4  fa fa-bars" id="menu-toggle" ></button>
+        <div class="project-container container-fluid">
+            <p class="text-danger text-center"><?php if(isset($view->invalid)){echo $view->invalid;} ?></p>
+            <p class="text-success text-center"><?php if(isset($view->deleteMessage)){echo $view->deleteMessage;} ?></p>
+            <div class="col-12 text-center">
+                <?php if(isset($_GET['showTeams'])) : ?>
+                    <h1>Your Teams</h1>
+                    <!--        Modal Toggle Buttons-->
+                    <div class="row">
+                        <button class="fas fa-plus btn-outline-dark btn-lg border border-dark ml-auto" data-toggle="modal" data-target="#createTeamModal"></button>
+                    </div>
+                <?php else: ?>
+                    <h1>Your Projects</h1>
+                    <!--        Modal Toggle Buttons-->
+                    <div class="row">
+                        <button class="fas fa-plus btn-outline-dark btn-lg border border-dark ml-auto" data-toggle="modal" data-target="#createProjectModal"></button>
+                    </div>
+                <?php endif;?>
+
+
+
+                <!--        Show all projects or teams for the logged in user -->
+                <div class="row justify-content-center">
+                    <?php if(isset($_GET['showTeams'])) : ?>
+                        <?php foreach($view->teamDataset as $team) : ?>
+                            <div class="col-sm-6 col-lg-4 p-3">
+                                <div class="card border border-dark">
+                                    <!--                    Card Body -->
+                                    <div class="card-body text-center">
+                                        <h3 class="card-title"><?php echo $team->getTeamName();?></h3>
+                                        <a href="<?php echo 'team.php?teamID='.$team->getTeamID();?>" class="btn btn-outline-dark btn-block shadow-none border mt-5 rounded-pill">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach;?>
+                    <?php else : ?>
+                        <?php if(count($view->projectDataset) != 0) : ?>
+                            <?php foreach($view->projectDataset as $userProject) : ?>
+                                <div class="col-sm-6 col-lg-4 p-3">
+                                    <div class="card border border-dark">
+                                        <!--                    Card Body -->
+                                        <div class="card-body text-center">
+                                            <h3 class="card-title"><?php echo $userProject->getProjectName();?></h3>
+                                            <a href="<?php echo 'project.php?projectID='.$userProject->getProjectId();?>" class="btn btn-outline-dark btn-block shadow-none border mt-5 rounded-pill">View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif;?>
+                    <?php endif;?>
+
+                </div>
+
+                <?php if(isset($_GET['showTeams'])) : ?>
+                    <!--        Modal for the show teams-->
+                    <div id="createTeamModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Create a Team</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <!--                        Create project form -->
+                                    <form method="post">
+                                        <div class="form-group">
+                                            <label for="projectName">Team Name</label>
+                                            <input type="text" name="teamName" class="form-control" placeholder="e.g Exam practice" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="organization">Select Department</label>
+                                            <select class="form-control" name="category">
+                                                <?php for($i = 0; $i < count($view->categoryDataset); $i++) : ?>
+                                                    <option><?php echo $view->categoryDataset[$i]->getCategoryName()?></option>
+                                                <?php endfor; ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="btn btn-outline-dark form-control" type="submit" name="teamSubmitBtn" value="Create">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                <?php else : ?>
+                    <!--        Modal for the add project form-->
+                    <div id="createProjectModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Create a Project</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <!--                        Create project form -->
+                                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+                                        <div class="form-group">
+                                            <label for="projectName">Project Name</label>
+                                            <input type="text" name="projectName" class="form-control" placeholder="e.g Exam practice" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="btn btn-outline-dark form-control" type="submit" name="projectSubmitBtn" value="Create">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                <?php endif;?>
+            </div>
+<!--Popup for teams-->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title text-dark" id="exampleModalLabel">Manage Departments</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" onsubmit="return confirm('Are you sure you want to delete this department?, all data concerning it will be lost');" >
+                                    <div class="form-group">
+                                        <label for="work_item_name" class="col-form-label text-dark">Available Departments</label><br>
+
+                                        <?php
+                                        foreach ($view->categoryItemSet as $categoryItem){
+                                           $categoryName =  $categoryItem->getCategoryName();
+
+                                            echo '  <input type="hidden" value='.$categoryName.' name="categoryName" >
+                                                    <span class="btn btn-outline-dark" style="margin: 0.5vh">'.$categoryName.'</span><button type="submit" class="close text-danger" data-toggle="tooltip" data-placement="left" title="Removes the category" name="removeCategoryBtn" >&times;</button> <br>'
+                                                    ;
+                                        }
+                                        ?>
+
+                                    </div>
+                                </form>
+                                    <div class="text-dark text-center"><h4>OR</h4></div>
+                                <form method="post">
+                                    <div class="form-group">
+                                        <label for="category" class="col-form-label text-dark">Create a new Department</label>
+                                        <input type="text" class="form-control" name="category" placeholder="Name for new category to be added" required>
+                                        <p><small class="text-danger"><?php if(isset(  $view->formError)){echo  $view->formError;}?></small></p>
+
+                                        <div class="modal-footer form-group">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn-dark btn-lg" name="createCategoryBtn">Add</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--                        End of modal-->
+                <!--                        Modal(popup for Teams)-->
+                <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-danger" id="exampleModalLabel2">Add Team</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="userportal.php" method="post">
+                                    <div class="form-group">
+                                        <label for="team_name" class="col-form-label text-dark">Team name</label>
+                                        <input type="text" class="form-control" name="teamName" placeholder="e.g. WebDev team" required>
+                                        <input type="hidden" name="categoryID" value="<?php echo $ID;?>">
+
+                                    </div>
+
+                                    <div class="modal-footer form-group">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn-dark btn-lg" name="addTeamBtn">Add</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--                end of modal-->
+
+
+                <div class="align-content-center border-danger">
+
+                    <?php if(isset($_SESSION['admin'])): ?>
+                    <div class="jumbotron ">
+                        <h1 class="text-center" style="font-family: fantasy"> <?php echo $view->organisationDataSet   ?></h1>
+                        <img src="images/profile.png" alt="Organisation logo" class=" mx-auto d-block img-thumbnail img-fluid " style="width: 25vw; height: 50vh; border-radius: 50%;" >
+                    </div>
+                        <span class="badge badge-secondary">Administrator</span>
+                    <div class="navbar" >
+                        <ul class="nav nav-tabs nav-fill" id="categoriesNav">
+                            <?php
+                            foreach ($view->categoryItemSet as $categoryItem){
+                                $categoryName = $categoryItem->getCategoryName();
+                                echo '<li class="nav-item">
+                <a class="nav-link" href="userportal.php?pagename='?><?php echo $categoryName; ?><?php echo '" style="margin-right: 1vw">'.$categoryName.'</a> 
+            </li>';
+                            }
+                            ?>
+                        </ul>
+                        <div class="container " style="margin: 20px">
+
+                            <?php if(!empty($categoryPageSwitch))
+                            {echo'
+        <div class="text-lg-center"><h1>Department Name:</h1><br>
+            <h2>'?><?php echo $categoryPageSwitch?><?php echo '</h2>
+            </div>
+        <div class="card bg-dark text-white text-center" style="width: 45vw">
+        <br>
+        <h3 class="project ">All teams: </h3>
+       <div class="dropright">
+         <button class="project fas fa-plus btn-outline-primary btn-lg text-center" style="max-width: 15rem;max-height: 3.3rem;" data-toggle="modal" data-target="#exampleModal2"> Create a Team</button>
+       </div>
+        <div>
+                ';
+
+//Gets all teams
+                                foreach ($view->teamDataSet as $teamData ){
+                                    $team_name = $teamData->getTeamName();
+                                    $teamData = $teamDataSet->fetchTeamID($team_name, $orgID);
+                                    $teamID = $teamData->getTeamID();
+                                    echo '<h4><a class="fas fa-users" href="teamview.php?teamName='.$team_name.'&&teamID='.$teamID.'&&teampage='?><?php echo $teamID; ?><?php echo ' "> Team Name: '.$team_name.'</a></h4>';
+                                }
+
+                                '</div>
+  ';}
+                            ?>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="container">
+                <div class="card bg-white text-dark text-center" style="border: 50rem #0b2e13;">
+                    <h3 class="project ">All Members in this organisation: </h3>
+                    <?php foreach ($organisationAllMembers as $members){
+                        echo '<h5 class="fas fa-user-tie text-center">' .' '.$members->getFirstName().' '. $members->getLastName().' </h5>';
+                        echo '<h6>'.'Email address: '.$members->getEmailAddress(). '</h6>';}?>
+                </div>
+            </div>
+
+                    <?php endif  ?>
+
+                </div>
+            </div>
+
+    </div>
+</div>
+
+
+<?php require_once ("Views/template/footer.phtml") ?>

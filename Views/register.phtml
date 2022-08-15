@@ -1,0 +1,56 @@
+<?php require_once ("Views/template/header.phtml"); ?>
+<div class="row ">
+    <img class="img-fluid register-img" src="images/register2.jpg">
+</div>
+
+<div class="row align-items-center">
+
+    <div class="col-sm-2 col-md-3"></div>
+    <div class="col-sm-8 col-md-6 mt-5">
+        <h1 class="mb-5 text-center">REGISTER WITH US</h1>
+        <form action="register.php" method="post" class="text-center"
+<!--            Input for Organization name -->
+            <div class="form-group mb-5">
+                <label for="orgName">Organization Name*</label>
+                <input type="text" class="form-control p-3" name="orgName" placeholder="e.g University of Salford" value="<?php if(isset($_POST['orgName'])){echo $_POST['orgName'];} ?>" required>
+            </div>
+<!--        Input for Domain name -->
+            <div class="form-group mb-5">
+                <label for="domainName">Domain Name*</label>
+                <input type="text" class="form-control p-3" name="domainName" placeholder="e.g salford.ac.uk" value="<?php if(isset($_POST['domainName'])){echo $_POST['domainName'];} ?>" required>
+            </div>
+<!--        Input for Telephone number-->
+            <div class="form-group mb-5">
+                <label for="orgTelephone">Telephone*</label>
+                <input type="tel" class="form-control p-3" name="orgTelephone" placeholder="e.g +4474000111222" value="<?php if(isset($_POST['orgTel'])){echo $_POST['orgTel'];} ?>" required>
+            </div>
+<!--            Input for admin email-->
+            <div class="form-group mb-5">
+                <label for="adminEmail">Admin Email Address*</label>
+                <input type="email" class="form-control p-3" name="adminEmail" placeholder="this will be the email of the admin user" value="<?php if(isset($_POST['adminEmail'])){echo $_POST['adminEmail'];}?>" required>
+            </div>
+            <div class="form-group mb-5">
+                <label for="confirmAdminEmail">Re-enter Admin Email Address*</label>
+                <input type="email" class="form-control p-3" name="confirmAdminEmail" placeholder="Re-enter Email" required>
+                <p class="text-danger"><small><?php if(isset($view->emailMisMatch))echo $view->emailMismatch;?></small></p>
+            </div>
+<!--        Input for admin password-->
+            <div class="form-group mb-5">
+                <label for="adminPassword">Preferred Admin Password*</label>
+                <input type="password" class="form-control p-3" name="adminPassword" placeholder="Admin Password" required>
+            </div>
+            <div class="form-group mb-5">
+                <label for="confirmPwd">Confirm Admin Password*</label>
+                <input type="password" class="form-control p-3" name="confirmAdminPassword" placeholder="Re-enter Admin Password" required>
+                <p class="text-danger"><small><?php if(isset($view->pwdMismatch))echo $view->pwdMismatch;?></small></p>
+            </div>
+            <p class="text-danger"><?php if(isset($registerError)){ echo $registerError;} ?></p>
+<!--        Sign up button -->
+            <div class="form-group mb-5" method="post">
+                <input type="submit" name="registerBtn" class="btn btn-outline-dark" value="Register">
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-2 col-md-3"></div>
+</div>
+<?php require_once ("Views/template/footer.phtml") ?>

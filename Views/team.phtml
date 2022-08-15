@@ -1,0 +1,86 @@
+<?php require_once ("Views/template/header.phtml"); ?>
+
+    <!--Whole page wrapper-->
+    <div class="d-flex" id="wrapper">
+        <!--    Sidebar-->
+        <?php require_once ("Views/template/sidebar.phtml");?>
+        <!--    Page Body-->
+        <div id="page-content-wrapper">
+            <button class="btn btn-lg btn-outline-dark border border-dark mt-2 ml-sm-4  fa fa-bars" id="menu-toggle" ></button>
+            <div class="project-container container-fluid">
+                <div class="col-12 text-center">
+                    <div class="border-bottom border-dark">
+                        <h3><?php echo $view->team->getTeamName();?></h3>
+                    </div>
+                    <div class="row mt-2">
+                        <button class="fas fa-plus btn-outline-dark btn-lg border border-dark ml-auto" data-toggle="modal" data-target="#teamProjectModal"></button>
+                    </div>
+                    <div class="row justify-content-center">
+                        <?php if(!isset($_GET['showMembers'])) : ?>
+                            <?php if(count($view->projectDataset) != 0) : ?>
+                                <?php foreach($view->projectDataset as $teamProject) : ?>
+                                    <div class="col-sm-6 col-lg-4 p-3">
+                                        <div class="card border border-dark">
+                                            <!--                    Card Body -->
+                                            <div class="card-body text-center">
+                                                <h3 class="card-title"><?php echo $teamProject->getProjectName();?></h3>
+                                                    <a href="<?php echo 'project.php?projectID='.$teamProject->getProjectId();?>&teamID=<?php echo $view->team->getTeamID();?>" class="btn btn-outline-dark btn-block shadow-none border mt-5 rounded-pill">View</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif;?>
+                        <?php else : ?>
+                            <?php foreach($view->teamMembers as $item) : ?>
+                        <div class="col-sm-6 col-lg-4 p-3">
+                            <div class="card border border-dark">
+                                <div class="card-img card-top border-bottom">
+                                    <i class="fas fa-user-tie fa-7x mt-5"></i>
+                                </div>
+                                <!--                    Card Body -->
+                                <div class="card-body text-center">
+                                    <h3 class="card-title"><?php echo $item->getFirstName()?> <?php echo $item->getLastName()?></h3>
+                                    <h5 class="card-title"><?php echo $item->getEmailAddress()?></h5>
+                                    <h5 class="card-title"><?php echo $item->getJobTitle()?></h5>
+                                </div>
+                            </div>
+                        </div>
+                            <?php endforeach;?>
+                        <?php endif;?>
+                    </div>
+                    <!--        Modal for the add team project form-->
+                    <div id="teamProjectModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Create a Project for the team</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <!--                        Create project form -->
+                                    <form method="post">
+                                        <div class="form-group">
+                                            <label for="projectName">Project Name</label>
+                                            <input type="text" name="projectName" class="form-control" placeholder="e.g Exam practice" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="btn btn-outline-dark form-control" type="submit" name="projectSubmitBtn" value="Create">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php require_once ("Views/template/footer.phtml"); ?>

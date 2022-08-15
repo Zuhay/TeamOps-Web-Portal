@@ -1,0 +1,23 @@
+<?php require_once ("Views/template/header.phtml");?>
+<div class="row">
+    <div class="col-12">
+        <p class="display-5 text-sm-center"><?php if(isset($view->noOfTeams)){echo $view->noOfTeams;}?></p>
+    </div>
+</div>
+<div class="row">
+    <?php foreach ($view->teamDataSet as $team) : ?>
+        <div class="col-sm-6 col-lg-4 p-3">
+            <div class="card">
+                <!--                    Card Image -->
+                <img class="card-img-top" src="images/teams.png" alt="task image">
+                <!--                    Card Body -->
+                <div class="card-body">
+                    <h4 class="card-title">Name: <?php echo $team->getTeamName();?></h4>
+                    <a href="<?php echo 'teamview.php?teamID='.$team->getTeamID().'&&teamName='.$team->getTeamName()?>" class="btn btn-primary btn-block">View Team</a>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+
+<?php require_once ("Views/template/footer.phtml");?>

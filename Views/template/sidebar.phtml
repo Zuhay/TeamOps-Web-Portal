@@ -1,0 +1,20 @@
+<!--Sidebar wrapper-->
+<div class="bg-light border-right shadow" id="sidebar-wrapper">
+    <div class="sidebar-heading">Menu </div>
+    <div class="list-group list-group-flush">
+        <?php if(!isset($_SESSION['admin'])) : ?>
+        <a href="profile.php" class="list-group-item list-group-item-action bg-light fas fa-user-circle "> Profile</a>
+        <a href="#" class=" list-group-item list-group-item-action bg-light fas fa-images"> Add/Change Background image</a>
+        <a href="userportal.php" class="list-group-item list-group-item-action bg-ligh fas fa-spinner "> Projects</a>
+        <a href="userportal.php?showTeams=true" class="list-group-item list-group-item-action bg-light font-weight-bold">Teams</a>
+        <?php endif; ?>
+        <?php if(isset($_SESSION['admin'])) : ?>
+            <a href="#" class="list-group-item list-group-item-action bg-light font-weight-bold" data-toggle="modal" data-target="#exampleModal">Manage Departments</a>
+            <a href="teams.php" class="list-group-item list-group-item-action bg-light font-weight-bold" >View all Teams</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light font-weight-bold">Ban/Suspend User</a>
+        <?php endif; ?>
+        <?php if(isset($_GET['teamID'])) : ?>
+            <a href="team.php?teamID=<?php echo $_GET['teamID'];?>&showMembers=true" class="list-group-item list-group-item-action bg-light font-weight-bold">Team Members</a>
+        <?php endif; ?>
+    </div>
+</div>

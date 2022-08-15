@@ -1,0 +1,60 @@
+<?php ?>
+<?php require_once('template/header.phtml') ?>
+<div class="row align-items-center" id="signup-body">
+
+    <div class="col-sm-2 col-md-3"></div>
+    <div class="col-sm-8 col-md-6">
+        <h1 class="mb-5 text-center"><i class="fa fa-address-book fa-2x" style="margin-top: 10vh"></i></h1>
+        <form action="signup.php" method="post" class="text-center">
+            <div class="form-group">
+                <label for="firstName">First Name*</label>
+                <input type="text" class="form-control p-3" name="firstName" placeholder="e.g John" value="<?php if(isset($_POST['firstName'])){echo $_POST['firstName'];} ?>" required>
+            </div>
+            <div class="form-group ">
+                <label for="lastName">Last Name*</label>
+                <input type="text" class="form-control p-3" name="lastName" placeholder="e.g Doe" value="<?php if(isset($_POST['lastName'])){echo $_POST['lastName'];} ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="organization">Select Organization</label>
+                <select class="form-control" name="organization">
+                    <?php for($i = 0; $i < count($view->orgDataset); $i++) : ?>
+                    <option><?php echo $view->orgDataset[$i]->getOrganisationName()?></option>
+                    <?php endfor; ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="jobTitle">Job Title</label>
+                <input type="text" class="form-control p-3" name="jobTitle" placeholder="Enter job title" required>
+            </div>
+            <div class="form-group">
+                <label for="emailAddress">Email Address*</label>
+                <input type="email" class="form-control p-3" name="emailAddress" placeholder="e.g johndoe@gmail.com" value="<?php if(isset($_POST['emailAddress'])){echo $_POST['emailAddress'];}?>" required>
+                <p><small class="text-danger"><?php if(isset($view->emailMismatch)){echo $view->emailMismatch;}?></small></p>
+            </div>
+            <div class="form-group">
+                <label for="confirmEmailAddress">Re-enter Email Address*</label>
+                <input type="email" class="form-control p-3" name="confirmEmailAddress" placeholder="Re-enter Email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Preferred Password*</label>
+                <input type="password" class="form-control p-3" name="password" placeholder="******" required>
+                <p><small class="text-danger"><?php if(isset($view->pwdMismatch)){echo $view->pwdMismatch;}?></small></p>
+            </div>
+            <div class="form-group">
+                <label for="confirmPwd">Confirm Password*</label>
+                <input type="password" class="form-control p-3" name="confirmPassword" placeholder="Re-enter Password" required><br>
+            </div>
+            <p class="text-danger">
+                <?php if(isset($view->signUpError)){echo $view->signUpError;}?>
+                <?php if(isset($view->domainMismatch)){echo $view->domainMismatch;}?>
+            </p>
+            <div class="form-group" method="post">
+                <input type="submit" name="signUpBtn" class="btn btn-outline-dark" value="Sign Up">
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-2 col-md-3"></div>
+</div>
+<?php require_once('template/footer.phtml') ?>

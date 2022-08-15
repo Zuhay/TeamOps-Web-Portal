@@ -1,0 +1,40 @@
+<?php require_once ("Views/template/header.phtml");?>
+<div class="row">
+    <div class="col-12">
+        <p class="text-center display-4"><?php if(isset($view->noOfTasks)){echo $view->noOfTasks;}?></p>
+    </div>
+</div>
+<div class="row justify-content-center min-vh-100">
+    <?php foreach ($view->projectTasks as $task) : ?>
+    <div class="col-sm-6 col-lg-4 p-3">
+        <div class="card border border-dark" style="min-height: 25%;">
+            <!--                    Card Image -->
+<!--            <img class="card-img-top" src="images/task-img.jpg" alt="task image">-->
+            <!--                    Card Body -->
+            <div class="card-body">
+                <h4 class="card-title text-center"><?php echo $task->getWorkItemName();?></h4>
+                <?php
+                    // get the date difference in days
+                    $strToday = date('Y-m-d');
+                    $today = date_create($strToday);
+                    $sDate = date_create($task->getWorkItemStartDate());
+                    $eDate = date_create($task->getWorkItemEndDate());
+
+                    $interval = date_diff($eDate, $today);
+                    $toBegin = date_diff($sDate, $today);
+//                    if the task has already started
+                    if($today < $sDate){
+                        echo '<h4 class="text-center mt-5 text-info">This task begins in ' . $toBegin->format('%a') . 'day(s)</h4>';
+                    }else{
+                        echo '<h4 class="text-center mt-5 text-info">' . $interval->format('%a') . ' day(s) left</h4>';
+                    }
+                ?>
+            </div>
+            <div class="card-footer bg-light">
+                <a href="<?php echo 'task.php?taskID='.$task->getWorkItemID();?><?php if(isset($_GET['teamID'])) : ?>&teamID=<?php echo $_GET['teamID']?><?php endif;?>" class="btn btn-outline-dark shadow-none border btn-block rounded-pill">View</a>
+            </div>
+        </div>
+    </div>
+    <?php endforeach; ?>
+</div>
+<?php require_once ("Views/template/footer.phtml");?>

@@ -1,0 +1,33 @@
+<?php require_once('template/header.phtml') ?>
+    <div class="row align-items-center" id="login-body">
+        <div class="col-sm-1 col-md-2 col-lg-3"></div>
+        <div class="col-sm-10 col-md-8 col-lg-6">
+            <h1 class="mb-5 display-4 text-center"><i class="fa fa-user fa-2x" style="margin-top: 20vh"></i></h1>
+
+            <!--        Login form -->
+            <form method="post" class="text-center">
+
+                <div class="form-group">
+                    <input class="form-control p-3" type="email" name="emailAddress" placeholder="Email Address" value="<?php if(isset($_POST['emailAddress'])){echo $_POST['emailAddress'];}?>" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control p-3 mb-4" type="password" name="password" placeholder="Password" value="<?php if(isset($_POST['password'])){echo $_POST['password'];} ?>" required>
+                </div>
+                <p class="text-danger"><?php if(isset($view->loginError)){echo $view->loginError;}?></p>
+                <div class="form-group mt-3 mb-3">
+                    <input type="submit" class="btn btn-outline-dark" name="loginBtn" value="Login">
+                </div>
+
+                <!--            Display the link to the sign up page-->
+                <div class="mt-2">
+                    <h5>Don't have an account yet?<a href="signup.php"> Sign up here</a></h5>
+
+                </div>
+            </form>
+
+        </div>
+        <div class="col-sm-1 col-md-2 col-lg-3">
+        </div>
+
+    </div>
+<?php require_once ("template/footer.phtml")?>

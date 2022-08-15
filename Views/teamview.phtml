@@ -1,0 +1,62 @@
+<?php
+
+require_once("Views/template/header.phtml");
+?>
+
+
+<!--Organization Name Tag-->
+<div class="container-fluid ">
+
+    <div class="row mt-1 mb-2 p-4 justify-content-center" style="background-color: #3F4621;">
+        <h3 class="text-light">Organization: <?php echo $view->organisationName?></h3>
+    </div>
+
+<!--Team Name Tag and Add/Delete Project Buttons-->
+
+    <div class="row-cols-1 bg-transparent m-3 justify-content-between">
+        <h2 class="text-dark mt-4 font-weight-bold text-center">Team Name: <?php echo $view->teamName?></h2>
+    </div>
+
+
+<!-- User Information -->
+    <?php foreach($view->teamMemberDataSet as $teamMemberData){
+      echo   '<div class="row-cols-1 bg-transparent mt-3 ml-5 mr-5">
+        <h4 class="text-dark mt-4 font-weight-bold" style="">Name of User: '.$teamMemberData->getFirstName().' '.$teamMemberData->getLastName().'</h4>
+        <p class="text-dark mt-3 mb-2 text-muted">Occupation: '.$teamMemberData->getJobTitle().'</p>
+        <p class="text-dark mt-2 mb-2 text-muted">Contact email: '.$teamMemberData->getEmailaddress().'</p>
+    </div>
+        ';
+    }?>
+
+
+
+
+<!--  Projects-->
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+
+<?php foreach($view->projectDataSet as $projectData){
+    echo
+               ' <div class="card text-left mb-3" style="margin-top: 7vh" >
+                    <div class="card-body">
+                        <h4 class="card-title font-weight-bold">Project name:'.$projectData->getProjectName().'</h4>
+                        <p class="text-primary text-left">Start Date:</p>
+                        <p class="card-text">Additional Information</p>
+                    </div>
+                    <div class="card-footer text-muted mb-3">
+                        <p class="text-danger text-right">End Date:</p>
+                    </div>
+                 </div>';}
+        ?>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<?php
+require_once("Views/template/footer.phtml");
+?>

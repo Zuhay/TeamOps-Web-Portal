@@ -1,0 +1,130 @@
+<?php require('Views/template/header.phtml') ?>
+
+ <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-10 mt-5 pt-4 pb-4">
+                <div class="row">
+                    <div class="col-sm-4 rounded-left" style="background-color: #3c3c3c !important;">
+                        <div class="card-block text-center text-white">
+            <?php  if(null == $itemData->getImageID()) : ?>
+                            <i class="fas fa-user-tie fa-7x mt-5"></i>
+            <?php else:?>
+
+            <?php endif;?>
+                            <h2 class="font-weight-bold mt-4"><?php echo $itemData->getLastName();?></h2>
+                            <p><?php echo $itemData->getJobTitle();?> <i class="far fa-edit fa-1x md-4 pb-3" data-toggle="modal" data-target="#job"></i></p>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-8 bg-white rounded-right">
+                        <h3 class="mt-3 text-center">Information</h3>
+                        <hr class=" mt-0 w-25" style="border-top: 1px solid #3c3c3c">
+                        <div class="row pb-3">
+                            <div class="col-sm-6">
+                                <p class="font-weight-bold">Email: <i class="far fa-edit fa-1x md-4" data-toggle="modal"  data-target="#email"></i></p>
+                                <h6 class="text-muted"><?php echo $itemData->getEmailAddress();?></h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="font-weight-bold">Full Name: <i class="far fa-edit fa-1x md-4" data-toggle="modal"  data-target="#name"></i></p>
+                                <h6 class="text-muted"><?php echo $itemData->getFirstName();?> <?php echo $itemData->getLastName();?></h6>
+                            </div>
+                        </div>
+
+                        <div class="row pb-1">
+                            <div class="col-sm-6">
+                                <p class="font-weight-bold">Organisation Name:</p>
+                                <h6 class="text-muted"><?php echo  $organisation->getOrganisationName();?></h6>
+                            </div>
+
+                        </div>
+                        <h4 class="mt-3">Other Links</h4>
+                        <hr class="mt-0" style="border-top: 1px solid #3c3c3c">
+                        <div class="row pb-3">
+                            <div class="col-sm-6">
+                                <a class="font-weight-bold" href="teamView.php">View My Teams</a>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <a class="font-weight-bold" href="userportal.php">View Personal Tasks</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade" id="job" role="dialog">
+    <div class="modal-dialog">
+        <form action="profile.php" method="post">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Profile</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <label for="value">Job Title</label>
+                <input type="text" class="form-control" name="value" placeholder="e.g Research Manager" required>
+                <input type="text" class="form-control" name="parameter" value="job_title" hidden>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default" name="saveBtn">Save</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="email" role="dialog">
+    <div class="modal-dialog">
+        <form action="profile.php" method="post">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Profile</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <label for="value">Email</label>
+                    <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="value" placeholder="e.g abc" aria-describedby="basic-addon2" required>
+                    <div class="input-group-append">
+                        <span  class="input-group-text p-1 pb-0" id="basic-addon2">@<?php echo  $organisation->getOrganisationEmailDomain();?></span>
+                    </div>
+                    </div>
+                    <input type="text" class="form-control" name="parameter" value="email_address" hidden>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default" name="saveBtn">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="name" role="dialog">
+    <div class="modal-dialog">
+        <form action="profile.php" method="post">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Profile</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <select class="form-control" id="sel1" name="parameter" required>
+                        <option  value="first_name">First Name</option>
+                        <option  value="last_name">Last Name</option>
+                    </select>
+                    <input type="text" class="form-control" name="value" placeholder="e.g Joe" required>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default" name="saveBtn">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<?php require('template/footer.phtml') ?>

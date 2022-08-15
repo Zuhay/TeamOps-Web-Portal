@@ -1,0 +1,191 @@
+<?php require_once ("Views/template/header.phtml");?>
+<div class="row justify-content-center min-vh-100 border-danger" style="background-color: rgba(0, 0, 0, 0.1)">
+    <div class="col-md-8 col-lg-7 p-0 align-self-center">
+<!--        Card to display the details of the task -->
+        <div class="card border-dark p-3 shadow-lg mh-100">
+            <div class="card-header bg-light border-bottom border-dark">
+
+<!--                Delete button -->
+                <button class="fas fa-trash-alt btn-outline-danger btn-lg border border-danger" data-toggle="modal" data-target="#deleteTaskModal"></button>
+                <button class="fas fa-edit btn-outline-dark btn-lg float-right border border-dark" data-toggle="modal" data-target="#editNameModal"></button>
+                <h1 class="card-title text-center"><?php echo $view->task->getWorkItemName();?></h1>
+            </div>
+            <div class="card-body">
+                <div class="mt-5">
+                    <h3 class="card-title text-center">From <?php echo $view->task->getWorkItemStartDate() ?></h3>
+    <!--                Edit icon for date -->
+                    <button class="fas fa-edit btn-outline-dark btn-lg float-right border border-dark" data-toggle="modal" data-target="#editDateModal"></button>
+                    <h3 class="card-title text-center">to</h3>
+                    <h3 class="card-title text-center"><?php echo $view->task->getWorkItemEndDate() ?></h3>
+                </div>
+                <div class="mt-5">
+<!--                    Edit icon for Effort -->
+                    <button class="fas fa-edit btn-outline-dark btn-lg float-right border border-dark" data-toggle="modal" data-target="#editEffortModal"></button>
+                    <h3 class="card-title text-center">Effort: <?php echo $view->task->getWorkItemEffort()?> hours</h3>
+                </div>
+                <div class="mt-5">
+    <!--                Edit icon for comments -->
+                    <button class="fas fa-edit btn-outline-dark btn-lg float-right border border-dark" data-toggle="modal" data-target="#editCommentsModal"></button>
+                    <h3 class="card-title text-center mt-5">Comments:</h3>
+                </div>
+                <div class="container mt-5" style="min-height: 10vh; border-top: 0.2px solid rgba(0, 0, 0, 0.4); border-bottom: 1px solid rgba(0, 0, 0, 1); border-right: 1px solid rgba(0, 0, 0, 1); border-left: 0.2px solid rgba(0, 0, 0, 0.4);">
+                    <h5 class="card-title text-center mt-3"><?php echo $view->task->getWorkItemComments() ?></h5>
+                </div>
+
+                <div class="container mt-5 mb-3 align-self-center">
+                    <button class="btn btn-outline-dark text-danger font-weight-bold"><a href="userportal.php">Back To Projects</a></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--    Modal for edit name-->
+    <div id="editNameModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit the name of the task</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <!--                        Edit Name form -->
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="taskName"> Task name: </label>
+                            <input type="text" name="taskName" class="form-control" value="<?php echo $view->task->getWorkItemName();?>" required>
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-outline-dark form-control" type="submit" name="editNameSubmitBtn" value="Edit">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    Modal for edit date -->
+    <div id="editDateModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Task Dates</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <!--                        Edit Start Date form -->
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" name="startDate" class="form-control" placeholder="Edit the start date of this task">
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate">End Date</label>
+                            <input type="date" name="endDate" class="form-control" placeholder="Edit the end date of this task">
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-outline-dark form-control" type="submit" name="editDateSubmitBtn" value="Edit">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<!--    Modal for edit effort-->
+    <div id="editEffortModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Effort</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <!--                        Edit Effort form -->
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="effort">Effort</label>
+                            <input type="number" name="effort" class="form-control" placeholder="Edit the start date of this task" required>
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-outline-dark form-control" type="submit" name="editEffortSubmitBtn" value="Edit">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    Modal for edit comments-->
+    <div id="editCommentsModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Comments</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <!--                        Edit Comments form -->
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="comments">Comments</label>
+                            <textarea type="text" name="comments" class="form-control" required><?php echo $view->task->getWorkItemComments();?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-outline-dark form-control" type="submit" name="editCommentsSubmitBtn" value="Edit">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    Modal for delete task-->
+    <div id="deleteTaskModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Task</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <!--                        Edit Comments form -->
+                    <form method="post">
+                        <div class="form-group">
+                            <p class="text-center">Are you sure you want to delete this task?</p>
+                        </div>
+                        <div class="form-group text-center">
+                            <input class="btn btn-outline-danger" type="submit" name="deleteTaskSubmitBtn" value="Yes, Delete">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php require_once ("Views/template/footer.phtml");?>
